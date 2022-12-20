@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import EditorToggle, { 
+  DRAFT_BLOCK_TYPE, DRAFT_INLINE_STYLE 
+} from './text-editor/editor-toggle'
+import TextEditor from './text-editor/text-editor'
+import './index.css'
+import EditorLinkToggle from './text-editor/link-toggle'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class EditorHeader extends React.Component{
+  render(): React.ReactNode {
+    const inlineStyles  = Object.keys(DRAFT_INLINE_STYLE)
+    const blockTypes    = Object.keys(DRAFT_BLOCK_TYPE)
+    return(
+      <div className = 'editor-toggles'>
+        <div className = 'upper-row'>
+          {inlineStyles.map((name) => 
+            <EditorToggle styleName = {name} key = {name}>
+              <p>{name}</p>
+            </EditorToggle>
+          )}
+        </div>
+        <div className = 'lower-row'>
+          {blockTypes.map((name) => 
+            <EditorToggle styleName = {name} key = {name}>
+              <p>{name}</p>
+            </EditorToggle>
+          )}
+          <EditorLinkToggle>
+            <p>Make Link</p>
+          </EditorLinkToggle>
+        </div>
+      </div>
+    )
+  }
 }
 
-export default App;
+export default class App extends React.Component{
+  render(){
+    return (
+      <TextEditor 
+        header          = {<EditorHeader />}
+        editorShortcut  = {true}
+      />
+    )
+  }
+};
