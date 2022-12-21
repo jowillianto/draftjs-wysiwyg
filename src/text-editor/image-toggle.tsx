@@ -26,14 +26,6 @@ export default class EditorImageToggle extends React.Component<
       dropDown    : false
     }
   }
-  componentDidMount(): void {
-    const decorators  = this.addDecorator()
-    const newState    = EditorState.createWithContent(
-      this.context.editorState.getCurrentContent(), 
-      new CompositeDecorator(Object.values(decorators))
-    )
-    this.context.setEditorState(newState, decorators)
-  }
   /*
     Image Searching Decorator
   */
@@ -85,7 +77,8 @@ export default class EditorImageToggle extends React.Component<
   /*
     Add the image
   */
-  addImage = () => {
+  addImage = (ev? : React.MouseEvent) => {
+    ev?.preventDefault()
     const imgData = this.state.uploadedImg
     if(imgData === null) return
     return new Promise((res, rej) => {
@@ -102,12 +95,12 @@ export default class EditorImageToggle extends React.Component<
           content, selection, "An Image", editorState.getCurrentInlineStyle(), 
           entityKey
         )
+        const decorators  = this.addDecorator()
         const newState    = EditorState.createWithContent(
-          newContent, 
-          new CompositeDecorator(Object.values(this.context.decorators))
+          newContent, new CompositeDecorator(Object.values(decorators))
         )
         const moveCursor  = EditorState.moveFocusToEnd(newState)
-        this.context.setEditorState(moveCursor)
+        this.context.setEditorState(moveCursor, decorators)
         this.toggleDropDown()
       })
       .catch((err) => {
@@ -131,12 +124,18 @@ export default class EditorImageToggle extends React.Component<
     uploadedImg   : ev.target.files ? ev.target.files[0] : null
   })
  }
+ onClick = (ev : React.MouseEvent) => {
+  ev.preventDefault()
+ }
   render() : React.ReactNode{
     return(
       <div className = 'img-toggle text-editor-toggle'>
-        <div className = 'button' onMouseDown={this.toggleDropDown}>
+        <button 
+          onMouseDown={this.toggleDropDown}
+          onClick    ={this.onClick}
+        >
           {this.props.children}
-        </div>
+        </button>
         {this.state.dropDown && 
           <div className='upload-bg'>
             <div className = 'img-toggle-dropdown text-editor-toggle upload-msgbox'>
@@ -144,18 +143,19 @@ export default class EditorImageToggle extends React.Component<
                 <input type = 'file' onChange = {this.uploadFile} />
               </div>
               <div className='upload-btns'>
-                <div 
-                  className = 'button' 
+                <button 
+                  onClick     = {this.onClick}
                   onMouseDown = {this.toggleDropDown}
                 >
                   Cancel
-                </div>
-                <div
-                  className = 'img-toggle-add button' 
+                </button>
+                <button 
+                  className   = 'img-toggle-add' 
                   onMouseDown = {this.addImage}
+                  onClick = {this.onClick}
                 >
                   <p>Add</p>
-                </div>
+                </button>
               </div>
             </div>
           </div>

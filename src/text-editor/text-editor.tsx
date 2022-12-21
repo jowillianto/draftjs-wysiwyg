@@ -82,6 +82,9 @@ export default class TextEditor extends React.Component<
     }
     this.editorRef  = React.createRef()
   }
+  componentDidMount(): void {
+    if(this.props.onChange) this.props.onChange(this.state.editorState)
+  }
   getInitialState(props : TextEditorProps) : EditorState{
     const defaultValue  = props.defaultValue
     if(!defaultValue) return EditorState.createEmpty()
@@ -91,7 +94,8 @@ export default class TextEditor extends React.Component<
           convertFromRaw(defaultValue)
         )
       }
-      catch{
+      catch(e){
+        console.error(e)
         return EditorState.createEmpty()
       }
     }

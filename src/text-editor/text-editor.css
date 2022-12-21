@@ -14,7 +14,7 @@
   align-items: center;
 }
 
-.editor-toggles div.button {
+.editor-toggles button {
   border-radius: 10px;
   width: 30px;
   height: 30px;
@@ -25,12 +25,12 @@
   align-items: center;
 }
 
-.editor-toggles div.button:hover {
+.editor-toggles button:hover {
   background: var(--gray);
 }
 
 /* Active */
-.inline-toggle.text-editor-toggle.active div.button {
+.inline-toggle.text-editor-toggle.active button {
   background: var(--gray);
 }
 
@@ -70,27 +70,27 @@
   align-items: center;
 }
 
-.upload-btns div.button {
+.upload-btns button {
   border-radius: 5rem;
   width: calc(100% / 2 - 10px);
   height: 40px;
   margin: 0px auto;
 }
 
-.upload-btns div.button:first-of-type {
+.upload-btns button:first-of-type {
   border: 1px solid var(--dark);
 }
 
-.upload-btns div.button:last-of-type {
+.upload-btns button:last-of-type {
   background: var(--main);
 }
 
-.upload-btns div.button:first-of-type:hover {
+.upload-btns button:first-of-type:hover {
   background: var(--dark);
   color: white;
 }
 
-.upload-btns div.button:last-of-type:hover {
+.upload-btns button:last-of-type:hover {
   background: var(--main);
   color: white;
 }

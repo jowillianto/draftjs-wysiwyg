@@ -41,8 +41,8 @@ interface InlineToggleProps{
 export default class EditorToggle extends React.Component<InlineToggleProps>{
   static contextType  = EditorContext
   context !: React.ContextType<typeof EditorContext>
-  toggleStyle = (ev : React.MouseEvent) => {
-    ev.preventDefault()
+  toggleStyle = (ev? : React.MouseEvent) => {
+    ev?.preventDefault()
     const styleName   = this.props.styleName
     const editorState = this.context.editorState
     // For the condition branches
@@ -82,13 +82,19 @@ export default class EditorToggle extends React.Component<InlineToggleProps>{
     }
     
   }
+  onClick = (ev : React.MouseEvent) => {
+    ev.preventDefault()
+  }
   render() : React.ReactNode{
     const active  = this.isActive()
     return (
       <div className = {`inline-toggle text-editor-toggle ${active}`}>
-        <div className = 'button' onMouseDown = {this.toggleStyle}>
+        <button 
+          onMouseDown = {this.toggleStyle}
+          onClick = {this.onClick}
+        >
           {this.props.children}
-        </div>
+        </button>
       </div>
     )
   }
