@@ -37,21 +37,10 @@ interface InlineToggleProps{
   styleName   : ToggleType,
   children    : React.ReactNode
 }
-interface InlineToggleState{
-  active      : boolean
-}
 
-export default class EditorToggle extends React.Component<
-  InlineToggleProps, InlineToggleState
->{
+export default class EditorToggle extends React.Component<InlineToggleProps>{
   static contextType  = EditorContext
   context !: React.ContextType<typeof EditorContext>
-  constructor(props : InlineToggleProps){
-    super(props)
-    this.state  = {
-      active  : false
-    }
-  }
   toggleStyle = (ev : React.MouseEvent) => {
     ev.preventDefault()
     const styleName   = this.props.styleName
@@ -75,8 +64,27 @@ export default class EditorToggle extends React.Component<
       console.warn(`${styleName} is not a valid type`)
     }
   }
+  isActive() : string{
+    const styleName   = this.props.styleName
+    const inlineMap   = DRAFT_INLINE_STYLE[styleName]
+    const blockMap    = DRAFT_BLOCK_TYPE[styleName]
+    if(inlineMap){
+      const styleSet  = this.context.editorState.getCurrentInlineStyle()
+      return styleSet.includes(inlineMap) ? 'active' : ''
+    }
+    else{
+      const selection = this.context.editorState.getSelection()
+      const blockKey  = selection.getEndKey()
+      const block     = this.context.editorState
+        .getCurrentContent()
+        .getBlockForKey(blockKey)
+      console.log(block.getType())
+      return block.getType() == blockMap ? 'active' : ''
+    }
+    
+  }
   render() : React.ReactNode{
-    const active  = this.state.active === true ? 'active' : ''
+    const active  = this.isActive()
     return (
       <div className = {`inline-toggle text-editor-toggle ${active}`}>
         <button onMouseDown = {this.toggleStyle}>
