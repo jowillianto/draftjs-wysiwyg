@@ -129,13 +129,18 @@ export default class EditorImageToggle extends React.Component<
           {this.props.children}
         </button>
         {this.state.dropDown && 
-          <div className = 'img-toggle-dropdown text-editor-toggle'>
-            <div className = 'img-toggle-upload'>
-              <input type = 'file' onChange = {this.uploadFile} />
+          <div className='upload-bg'>
+            <div className = 'img-toggle-dropdown text-editor-toggle upload-msgbox'>
+              <div className = 'img-toggle-upload'>
+                <input type = 'file' onChange = {this.uploadFile} />
+              </div>
+              <div className='upload-btns'>
+                <button onMouseDown = {this.toggleDropDown}>Cancel</button>
+                <button className = 'img-toggle-add' onClick = {this.addImage}>
+                  <p>Add</p>
+                </button>
+              </div>
             </div>
-            <button className = 'img-toggle-add' onClick = {this.addImage}>
-              <p>Add</p>
-            </button>
           </div>
         }
       </div>

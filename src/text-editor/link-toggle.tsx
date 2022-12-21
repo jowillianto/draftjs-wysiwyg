@@ -139,22 +139,27 @@ export default class EditorLinkToggle extends React.Component<
           {this.props.children}
         </button>
         {this.state.showDropDown && 
-          <div className = 'link-toggle-dropdown text-editor-toggle'>
-            <div className = 'link-toggle-text text-editor-toggle'>
-              <p>Text</p>
-              <input 
-                type = 'text' onChange = {this.onTextChange}
-              />
+          <div className='upload-bg'>
+            <div className = 'link-toggle-dropdown text-editor-toggle upload-msgbox'>
+              <div className = 'link-toggle-text text-editor-toggle'>
+                <p>Name</p>
+                <input
+                  type = 'text' onChange = {this.onTextChange}
+                />
+              </div>
+              <div className = 'link-toggle-href text-editor-toggle'>
+                <p>Link</p>
+                <input
+                  type = 'url' onChange = {this.onLinkChange}
+                />
+              </div>
+              <div className='upload-btns'>
+                <button onMouseDown = {this.toggleDropDown}>Cancel</button>
+                <button className = 'link-toggle-add' onClick = {this.addLink}>
+                  <p>Add</p>
+                </button>
+              </div>
             </div>
-            <div className = 'link-toggle-href text-editor-toggle'>
-              <p>Link</p>
-              <input 
-                type = 'url' onChange = {this.onLinkChange}
-              />
-            </div>
-            <button className = 'link-toggle-add' onClick = {this.addLink}>
-              <p>Add</p>
-            </button>
           </div>
         }
       </div>
