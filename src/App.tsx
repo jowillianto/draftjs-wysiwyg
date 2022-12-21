@@ -5,8 +5,18 @@ import EditorToggle, {
 import TextEditor from './text-editor/text-editor'
 import './index.css'
 import EditorLinkToggle from './text-editor/link-toggle'
+import EditorImageToggle from './text-editor/image-toggle'
 
 class EditorHeader extends React.Component{
+  convertToLink(img : Blob) : Promise<string | ArrayBuffer | null>{
+    const reader  = new FileReader()
+    return new Promise((res, rej) => {
+      reader.readAsDataURL(img)
+      reader.addEventListener('loadend', (ev : ProgressEvent<FileReader>) => {
+        res(reader.result)
+      })
+    })
+  }
   render(): React.ReactNode {
     const inlineStyles  = Object.keys(DRAFT_INLINE_STYLE)
     const blockTypes    = Object.keys(DRAFT_BLOCK_TYPE)
@@ -28,6 +38,9 @@ class EditorHeader extends React.Component{
           <EditorLinkToggle>
             <p>Make Link</p>
           </EditorLinkToggle>
+          <EditorImageToggle convertToLink = {this.convertToLink}>
+            <p>Make Image</p>
+          </EditorImageToggle>
         </div>
       </div>
     )

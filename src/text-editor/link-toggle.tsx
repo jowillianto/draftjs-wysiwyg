@@ -59,16 +59,11 @@ export default class EditorLinkToggle extends React.Component<
   */
   toggleDropDown = (ev : React.MouseEvent) => {
     ev.preventDefault()
-    if(this.state.showDropDown)
-      this.setState({
-        linkText    : '', 
-        srcText     : '', 
-        showDropDown: false
-      })
-    else 
-      this.setState({
-        showDropDown : true
-      })
+    this.setState({
+      linkText    : '', 
+      srcText     : '', 
+      showDropDown: !this.state.showDropDown
+    })
   }
   /*
     Handle form changing
