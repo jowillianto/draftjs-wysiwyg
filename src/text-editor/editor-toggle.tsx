@@ -86,9 +86,9 @@ export default class EditorToggle extends React.Component<InlineToggleProps>{
     const active  = this.isActive()
     return (
       <div className = {`inline-toggle text-editor-toggle ${active}`}>
-        <button onMouseDown = {this.toggleStyle}>
+        <div className = 'button' onMouseDown = {this.toggleStyle}>
           {this.props.children}
-        </button>
+        </div>
       </div>
     )
   }

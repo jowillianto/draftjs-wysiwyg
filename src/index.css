@@ -8,7 +8,7 @@
   --warning: #ff573d;
 }
 
-button {
+div.button {
   outline: none;
   background: transparent;
   border: transparent;
@@ -17,12 +17,12 @@ button {
 }
 
 input {
-  border: 1px solid var(--dark);
+  border: 1px solid var(--dark) !important;
   border-radius: 10px;
   padding: 1rem;
 }
 
 input:focus {
   outline: none;
-  border: 1px solid var(--main);
+  border: 1px solid var(--main) !important;
 }

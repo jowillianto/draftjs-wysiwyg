@@ -7,7 +7,9 @@ import {
   getDefaultKeyBinding,
   DraftEditorCommand,
   DraftDecorator,
-  ContentState
+  ContentState,
+  RawDraftContentState,
+  convertFromRaw
 } from 'draft-js'
 import "./text-editor.css"
 
@@ -41,6 +43,7 @@ interface TextEditorProps{
   editorBehaviour?: EditorBehaviour,
   editorShortcut? : ((e : React.KeyboardEvent) => DraftEditorCommand) | boolean
   onChange?       : (e : EditorState) => any
+  defaultValue?   : RawDraftContentState
 }
 
 /*
@@ -73,11 +76,25 @@ export default class TextEditor extends React.Component<
   constructor(props : TextEditorProps){
     super(props)
     this.state  = {
-      editorState   : EditorState.createEmpty(),
+      editorState   : this.getInitialState(props),
       setEditorState: this.setEditorState,
       decorators    : {}
     }
     this.editorRef  = React.createRef()
+  }
+  getInitialState(props : TextEditorProps) : EditorState{
+    const defaultValue  = props.defaultValue
+    if(!defaultValue) return EditorState.createEmpty()
+    else{
+      try{
+        return EditorState.createWithContent(
+          convertFromRaw(defaultValue)
+        )
+      }
+      catch{
+        return EditorState.createEmpty()
+      }
+    }
   }
   // Main Handler
   /*

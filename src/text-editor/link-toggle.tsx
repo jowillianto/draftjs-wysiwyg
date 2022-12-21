@@ -54,6 +54,14 @@ export default class EditorLinkToggle extends React.Component<
       showDropDown : false
     }
   }
+  componentDidMount(): void {
+    const decorators  = this.addDecorator()
+    const newState    = EditorState.createWithContent(
+      this.context.editorState.getCurrentContent(), 
+      new CompositeDecorator(Object.values(decorators))
+    )
+    this.context.setEditorState(newState, decorators)
+  }
   /*
     Toggle Dropdown for form filling
   */
@@ -124,21 +132,20 @@ export default class EditorLinkToggle extends React.Component<
       content, selection, linkLabel, editorState.getCurrentInlineStyle(),
       entityKey
     )
-    const decorators  = this.addDecorator()
     const newState    = EditorState.createWithContent(
       newContent, 
-      new CompositeDecorator(Object.values(decorators))
+      new CompositeDecorator(Object.values(this.context.decorators))
     )
     const moveCursor  = EditorState.moveFocusToEnd(newState)
-    this.context.setEditorState(moveCursor, decorators)
+    this.context.setEditorState(moveCursor)
     this.toggleDropDown()
   }
   render() : React.ReactNode{
     return(
       <div className = 'link-toggle text-editor-toggle'>
-        <button onMouseDown = {this.toggleDropDown}>
+        <div className = 'button' onMouseDown = {this.toggleDropDown}>
           {this.props.children}
-        </button>
+        </div>
         {this.state.showDropDown && 
           <div className='upload-bg'>
             <div className = 'link-toggle-dropdown text-editor-toggle upload-msgbox'>
@@ -155,10 +162,16 @@ export default class EditorLinkToggle extends React.Component<
                 />
               </div>
               <div className='upload-btns'>
-                <button onMouseDown = {this.toggleDropDown}>Cancel</button>
-                <button className = 'link-toggle-add' onClick = {this.addLink}>
+                <div 
+                  className = 'button' 
+                  onMouseDown = {this.toggleDropDown}
+                >
+                  Cancel
+                </div>
+                <div
+                  className = 'link-toggle-add button' onClick = {this.addLink}>
                   <p>Add</p>
-                </button>
+                </div>
               </div>
             </div>
           </div>

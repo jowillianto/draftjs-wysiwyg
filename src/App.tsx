@@ -5,8 +5,21 @@ import './index.css'
 import EditorLinkToggle from './text-editor/link-toggle'
 import EditorImageToggle from './text-editor/image-toggle'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBold, faItalic, faUnderline, faListUl, faListOl, faCode, faQuoteLeft, faLink, faImage } from "@fortawesome/free-solid-svg-icons"
-import { EditorState } from 'draft-js'
+import { 
+  faBold, 
+  faItalic, 
+  faUnderline, 
+  faListUl, 
+  faListOl, 
+  faCode, 
+  faQuoteLeft, 
+  faLink, 
+  faImage 
+} from "@fortawesome/free-solid-svg-icons"
+import {
+  EditorState, 
+  RawDraftContentState
+} from 'draft-js'
 
 class EditorHeader extends React.Component{
   convertToLink(img : Blob) : Promise<string | ArrayBuffer | null>{
@@ -63,11 +76,14 @@ class EditorHeader extends React.Component{
 export default class App extends React.Component<
   Object, {editor : EditorState | null}
 >{
+  defaultValue : RawDraftContentState
   constructor(props : Object){
     super(props)
     this.state  = {
       editor : null
     }
+    const stringValue = document.getElementById('draft-form-data')?.textContent
+    this.defaultValue = JSON.parse(stringValue ? stringValue : '{}')
   }
   updateEditor = (state : EditorState) => {
     this.setState({editor : state})
@@ -79,6 +95,7 @@ export default class App extends React.Component<
         editorShortcut  = {true}
         key             = {1}
         onChange        = {this.updateEditor}
+        defaultValue    = {this.defaultValue}
       />
     )
   }

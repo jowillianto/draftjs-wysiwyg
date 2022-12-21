@@ -26,6 +26,14 @@ export default class EditorImageToggle extends React.Component<
       dropDown    : false
     }
   }
+  componentDidMount(): void {
+    const decorators  = this.addDecorator()
+    const newState    = EditorState.createWithContent(
+      this.context.editorState.getCurrentContent(), 
+      new CompositeDecorator(Object.values(decorators))
+    )
+    this.context.setEditorState(newState, decorators)
+  }
   /*
     Image Searching Decorator
   */
@@ -94,12 +102,12 @@ export default class EditorImageToggle extends React.Component<
           content, selection, "An Image", editorState.getCurrentInlineStyle(), 
           entityKey
         )
-        const decorators  = this.addDecorator()
         const newState    = EditorState.createWithContent(
-          newContent, new CompositeDecorator(Object.values(decorators))
+          newContent, 
+          new CompositeDecorator(Object.values(this.context.decorators))
         )
         const moveCursor  = EditorState.moveFocusToEnd(newState)
-        this.context.setEditorState(moveCursor, decorators)
+        this.context.setEditorState(moveCursor)
         this.toggleDropDown()
       })
       .catch((err) => {
@@ -126,9 +134,9 @@ export default class EditorImageToggle extends React.Component<
   render() : React.ReactNode{
     return(
       <div className = 'img-toggle text-editor-toggle'>
-        <button onMouseDown={this.toggleDropDown}>
+        <div className = 'button' onMouseDown={this.toggleDropDown}>
           {this.props.children}
-        </button>
+        </div>
         {this.state.dropDown && 
           <div className='upload-bg'>
             <div className = 'img-toggle-dropdown text-editor-toggle upload-msgbox'>
@@ -136,10 +144,18 @@ export default class EditorImageToggle extends React.Component<
                 <input type = 'file' onChange = {this.uploadFile} />
               </div>
               <div className='upload-btns'>
-                <button onMouseDown = {this.toggleDropDown}>Cancel</button>
-                <button className = 'img-toggle-add' onClick = {this.addImage}>
+                <div 
+                  className = 'button' 
+                  onMouseDown = {this.toggleDropDown}
+                >
+                  Cancel
+                </div>
+                <div
+                  className = 'img-toggle-add button' 
+                  onMouseDown = {this.addImage}
+                >
                   <p>Add</p>
-                </button>
+                </div>
               </div>
             </div>
           </div>
