@@ -11,6 +11,9 @@ import {
 } from 'draft-js'
 import "./text-editor.css"
 
+/* 
+  Component Specification for Draft Decorator Component 
+*/
 export interface DraftDecoratorComponentProps{
   contentState : ContentState, 
   entityKey : string, 
@@ -18,6 +21,9 @@ export interface DraftDecoratorComponentProps{
   children : React.ReactNode
 }
 
+/*
+  Editor Behaviour for Editor
+*/
 interface EditorBehaviour{
   autoCapitalize?   : string,
   autoComplete?     : string,
@@ -27,12 +33,18 @@ interface EditorBehaviour{
   stripPastedStyles?: boolean
 }
 
+/*
+  Props accepted by Text editor
+*/
 interface TextEditorProps{
   header?         : React.ReactNode,
   editorBehaviour?: EditorBehaviour,
   editorShortcut? : ((e : React.KeyboardEvent) => DraftEditorCommand) | boolean
 }
 
+/*
+  State of Text Editor
+*/
 interface TextEditorState{
   editorState   : EditorState,
   setEditorState: (
@@ -41,12 +53,18 @@ interface TextEditorState{
   decorators    : Record<string, DraftDecorator>
 }
 
+/*
+  Context owned by the editor
+*/
 export const EditorContext = React.createContext<TextEditorState>({
   editorState   : EditorState.createEmpty(),
   setEditorState: (state : EditorState) => {}, 
   decorators    : {}
 })
 
+/*
+  Text editor class
+*/
 export default class TextEditor extends React.Component<
   TextEditorProps, TextEditorState
 >{
