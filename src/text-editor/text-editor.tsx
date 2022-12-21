@@ -40,6 +40,7 @@ interface TextEditorProps{
   header?         : React.ReactNode,
   editorBehaviour?: EditorBehaviour,
   editorShortcut? : ((e : React.KeyboardEvent) => DraftEditorCommand) | boolean
+  onChange?       : (e : EditorState) => any
 }
 
 /*
@@ -93,6 +94,7 @@ export default class TextEditor extends React.Component<
       this.setState({
         editorState : state
       })
+    if(this.props.onChange) this.props.onChange(state)
   }
   /*
     Handle keys command, input, etc.

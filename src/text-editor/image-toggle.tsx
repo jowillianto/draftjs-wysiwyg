@@ -100,6 +100,7 @@ export default class EditorImageToggle extends React.Component<
         )
         const moveCursor  = EditorState.moveFocusToEnd(newState)
         this.context.setEditorState(moveCursor, decorators)
+        this.toggleDropDown()
       })
       .catch((err) => {
         console.error(err)
@@ -110,8 +111,8 @@ export default class EditorImageToggle extends React.Component<
   /*
     Toggle DropDown
   */
- toggleDropDown = (ev : React.MouseEvent) => {
-  ev.preventDefault()
+ toggleDropDown = (ev? : React.MouseEvent) => {
+  ev?.preventDefault()
   this.setState({
     uploadedImg   : null, 
     dropDown      : !this.state.dropDown

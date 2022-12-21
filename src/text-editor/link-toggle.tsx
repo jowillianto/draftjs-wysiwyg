@@ -57,8 +57,8 @@ export default class EditorLinkToggle extends React.Component<
   /*
     Toggle Dropdown for form filling
   */
-  toggleDropDown = (ev : React.MouseEvent) => {
-    ev.preventDefault()
+  toggleDropDown = (ev? : React.MouseEvent) => {
+    ev?.preventDefault()
     this.setState({
       linkText    : '', 
       srcText     : '', 
@@ -131,6 +131,7 @@ export default class EditorLinkToggle extends React.Component<
     )
     const moveCursor  = EditorState.moveFocusToEnd(newState)
     this.context.setEditorState(moveCursor, decorators)
+    this.toggleDropDown()
   }
   render() : React.ReactNode{
     return(
