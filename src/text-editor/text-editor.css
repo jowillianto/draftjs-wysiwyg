@@ -119,5 +119,6 @@
 .DraftEditor-editorContainer {
   border-top: 1px solid var(--dark);
   min-height: 500px;
+  padding: 1rem;
   font-size: 18px;
 }
