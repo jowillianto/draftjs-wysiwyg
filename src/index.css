@@ -26,3 +26,15 @@ input:focus {
   outline: none;
   border: 1px solid var(--main) !important;
 }
+
+button.submit-button{
+  border-radius: 5rem;
+  width : 150px;
+  height: 40px;
+  margin: 0px auto;
+  background-color: var(--main);
+  margin-top : 1em;
+  color : var(--gray);
+  font-size: 1.1em;
+  font-weight: bold;
+}

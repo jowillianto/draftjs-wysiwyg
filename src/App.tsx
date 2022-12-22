@@ -84,15 +84,18 @@ export default class App extends React.Component<
       editor : null
     }
     const initData    = process.env.REACT_APP_INIT_DATA as string
-    const stringValue = (document.getElementById(initData) as HTMLInputElement).value
+    const stringValue = (
+      document.getElementById(initData) as HTMLInputElement
+    )?.value
     this.defaultValue = JSON.parse(stringValue ? stringValue : '{}')
-    const saveDelay   = parseInt(process.env.REACT_APP_SAVE_DELAY as string)
-    setTimeout(this.exportEditor, saveDelay)
+    const autoSaveDelay   = parseInt(process.env.REACT_APP_SAVE_DELAY as string)
+    setInterval(this.exportEditor, autoSaveDelay)
   }
   updateEditor = (state : EditorState) => {
     this.setState({editor : state})
   }
-  exportEditor = () => {
+  exportEditor = (ev? : React.MouseEvent) => {
+    ev?.preventDefault()
     const fieldName = process.env.REACT_APP_HIDDEN_FIELD as string
     const hidden    = document.getElementById(fieldName)
     if(hidden && this.state.editor){
@@ -103,13 +106,18 @@ export default class App extends React.Component<
   }
   render(){
     return (
-      <TextEditor 
-        header          = {<EditorHeader />}
-        editorShortcut  = {true}
-        key             = {1}
-        onChange        = {this.updateEditor}
-        defaultValue    = {this.defaultValue}
-      />
+      <React.Fragment>
+        <TextEditor 
+          header          = {<EditorHeader />}
+          editorShortcut  = {true}
+          key             = {1}
+          onChange        = {this.updateEditor}
+          defaultValue    = {this.defaultValue}
+        />
+        <button className = 'submit-button' onClick = {this.exportEditor}>
+          Save Draft
+        </button>
+      </React.Fragment>
     )
   }
 };
