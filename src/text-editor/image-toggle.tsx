@@ -1,6 +1,10 @@
-import { CompositeDecorator, ContentBlock, ContentState, DraftDecorator, EditorState, Modifier } from "draft-js"
+import { 
+  CompositeDecorator,
+  EditorState, 
+  Modifier 
+} from "draft-js"
 import React from "react"
-import { DraftDecoratorComponentProps, EditorContext } from "./text-editor"
+import { EditorContext } from "./text-editor"
 
 interface ImageToggleProps{
   children      : React.ReactNode
@@ -27,54 +31,6 @@ export default class EditorImageToggle extends React.Component<
     }
   }
   /*
-    Image Searching Decorator
-  */
-  static imageSearch(
-    block : ContentBlock,
-    callback : (start : number, end : number) => void, 
-    contentState : ContentState
-  ){
-    block.findEntityRanges((char) => {
-      const entityKey = char.getEntity()
-      return (
-        entityKey !== null && 
-        contentState 
-          .getEntity(entityKey)
-          .getType() === EditorImageToggle.ENTITY_NAME
-      )
-    }, callback)
-  }
-  /*
-    Toggle Dropdown for Image
-  */
-  /*
-    Decorator handling
-  */
-  addDecorator = () : Record<string, DraftDecorator> => {
-    if(this.context.decorators.imgDecorator)
-      return this.context.decorators
-    const imgDecorator : DraftDecorator = {
-      strategy : EditorImageToggle.imageSearch, 
-      component: this.propsToImg
-    }
-    return Object.assign(this.context.decorators, {
-      imgDecorator : imgDecorator
-    })
-  }
-  /*
-    image Renderer
-  */
-  propsToImg = (props  : DraftDecoratorComponentProps) : React.ReactNode => {
-    const {contentState, entityKey, blockKey, children} = props
-    const {url} = contentState.getEntity(entityKey).getData()
-    return (
-      <React.Fragment>
-        <img src = {url} style = {EditorImageToggle.DEFAULT_CSS}></img>
-        <p style = {{visibility : 'hidden'}}>{props.children}</p>
-      </React.Fragment>
-    )
-  }
-  /*
     Add the image
   */
   addImage = (ev? : React.MouseEvent) => {
@@ -95,13 +51,12 @@ export default class EditorImageToggle extends React.Component<
           content, selection, "An Image", editorState.getCurrentInlineStyle(), 
           entityKey
         )
-        const decorators  = this.addDecorator()
         const newState    = EditorState.createWithContent(
-          newContent, new CompositeDecorator(Object.values(decorators))
+          newContent, 
+          new CompositeDecorator(this.context.decorators)
         )
         const moveCursor  = EditorState.moveFocusToEnd(newState)
-        this.context.setEditorState(moveCursor, decorators)
-        this.toggleDropDown()
+        this.context.setEditorState(moveCursor)
       })
       .catch((err) => {
         console.error(err)
@@ -112,8 +67,8 @@ export default class EditorImageToggle extends React.Component<
   /*
     Toggle DropDown
   */
- toggleDropDown = (ev? : React.MouseEvent) => {
-  ev?.preventDefault()
+ toggleDropDown = (ev : React.MouseEvent) => {
+  ev.preventDefault()
   this.setState({
     uploadedImg   : null, 
     dropDown      : !this.state.dropDown
