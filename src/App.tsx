@@ -17,6 +17,7 @@ import {
   faImage 
 } from "@fortawesome/free-solid-svg-icons"
 import {
+  convertToRaw,
   EditorState, 
   RawDraftContentState
 } from 'draft-js'
@@ -82,11 +83,23 @@ export default class App extends React.Component<
     this.state  = {
       editor : null
     }
-    const stringValue = document.getElementById('draft-form-data')?.textContent
+    const initData    = process.env.REACT_APP_INIT_DATA as string
+    const stringValue = (document.getElementById(initData) as HTMLInputElement).value
     this.defaultValue = JSON.parse(stringValue ? stringValue : '{}')
+    const saveDelay   = parseInt(process.env.REACT_APP_SAVE_DELAY as string)
+    setTimeout(this.exportEditor, saveDelay)
   }
   updateEditor = (state : EditorState) => {
     this.setState({editor : state})
+  }
+  exportEditor = () => {
+    const fieldName = process.env.REACT_APP_HIDDEN_FIELD as string
+    const hidden    = document.getElementById(fieldName)
+    if(hidden && this.state.editor){
+      (hidden as HTMLInputElement).value  = JSON.stringify(convertToRaw(
+        this.state.editor.getCurrentContent()
+      ))
+    }
   }
   render(){
     return (
