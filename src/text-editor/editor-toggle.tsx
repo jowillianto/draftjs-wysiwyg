@@ -78,7 +78,7 @@ export default class EditorToggle extends React.Component<InlineToggleProps>{
       const block     = this.context.editorState
         .getCurrentContent()
         .getBlockForKey(blockKey)
-      return block.getType() == blockMap ? 'active' : ''
+      return block.getType() === blockMap ? 'active' : ''
     }
     
   }
