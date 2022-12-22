@@ -1,14 +1,11 @@
 import { 
   CompositeDecorator,
-  ContentBlock,
-  ContentState,
-  DraftDecorator,
   EditorState,
   Modifier
 } from 'draft-js'
 import React from 'react'
 import {
-  EditorContext, DraftDecoratorComponentProps
+  EditorContext
 } from './text-editor'
 
 interface EditorLinkToggleProps{
@@ -21,30 +18,13 @@ interface EditorLinkToggleState{
   showDropDown  : boolean
 }
 
+
 export default class EditorLinkToggle extends React.Component<
   EditorLinkToggleProps, EditorLinkToggleState
 >{
   static contextType  = EditorContext
   context !: React.ContextType<typeof EditorContext>
   static ENTITY_NAME  = 'LINK'
-  /*
-    Link Search Strategy
-  */
-  static linkSearch(
-    block : ContentBlock, 
-    callback: (start : number, end : number) => void, 
-    contentState : ContentState
-  ){
-    block.findEntityRanges((char) => {
-      const entityKey   = char.getEntity()
-      return (
-        entityKey !== null && 
-        contentState
-          .getEntity(entityKey)
-          .getType() === EditorLinkToggle.ENTITY_NAME
-      )
-    }, callback)
-  }
 
   constructor(props : EditorLinkToggleProps){
     super(props)
@@ -75,38 +55,6 @@ export default class EditorLinkToggle extends React.Component<
     this.setState({srcText  : ev.target.value})
   }
   /*
-    Handle decorator addition for draft
-  */
-  addDecorator = () : Record<string, DraftDecorator> => {
-    if(this.context.decorators.linkDecorator) 
-      return this.context.decorators
-    const linkDecorator : DraftDecorator = {
-      strategy  : EditorLinkToggle.linkSearch,
-      component : this.transformRenderLink, 
-    }
-    return Object.assign(this.context.decorators, {
-      linkDecorator : linkDecorator
-    })
-  }
-  /*
-    Create Link Subclass
-  */
-  transformRenderLink = (
-    props : DraftDecoratorComponentProps
-  ) : React.ReactNode => {
-    const {contentState, entityKey, blockKey, children}   = props
-    const {url, linkText}   = contentState.getEntity(entityKey).getData()
-    const element           = this.props.renderLink
-    return element ? 
-      React.cloneElement(
-        element, {to : url, children : linkText ? linkText : children}
-      )
-      :
-      (<a href = {url}>
-        {linkText || props.children}
-      </a>)
-  }
-  /*
     Add the link to the editor
   */
   addLink = () => {
@@ -124,13 +72,12 @@ export default class EditorLinkToggle extends React.Component<
       content, selection, linkLabel, editorState.getCurrentInlineStyle(),
       entityKey
     )
-    const decorators  = this.addDecorator()
     const newState    = EditorState.createWithContent(
       newContent, 
-      new CompositeDecorator(Object.values(decorators))
+      new CompositeDecorator(this.context.decorators)
     )
     const moveCursor  = EditorState.moveFocusToEnd(newState)
-    this.context.setEditorState(moveCursor, decorators)
+    this.context.setEditorState(moveCursor)
     this.toggleDropDown()
   }
   render() : React.ReactNode{
