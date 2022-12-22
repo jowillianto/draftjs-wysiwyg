@@ -7,21 +7,13 @@ import {
   getDefaultKeyBinding,
   DraftEditorCommand,
   DraftDecorator,
-  ContentState,
-  RawDraftContentState,
-  convertFromRaw
+  RawDraftContentState, 
+  CompositeDecorator,
+  convertFromRaw,
+  convertToRaw
 } from 'draft-js'
 import "./text-editor.css"
-
-/* 
-  Component Specification for Draft Decorator Component 
-*/
-export interface DraftDecoratorComponentProps{
-  contentState : ContentState, 
-  entityKey : string, 
-  blockKey : string,
-  children : React.ReactNode
-}
+import getDefaultDecorators from "./decorators"
 
 /*
   Editor Behaviour for Editor
@@ -42,7 +34,7 @@ interface TextEditorProps{
   header?         : React.ReactNode,
   editorBehaviour?: EditorBehaviour,
   editorShortcut? : ((e : React.KeyboardEvent) => DraftEditorCommand) | boolean
-  onChange?       : (e : EditorState) => any
+  onChange?       : (e : EditorState) => any, 
   defaultValue?   : RawDraftContentState
 }
 
@@ -54,7 +46,7 @@ interface TextEditorState{
   setEditorState: (
     state : EditorState, decorator? : Record<string, DraftDecorator>
   ) => void
-  decorators    : Record<string, DraftDecorator>
+  decorators    : Array<DraftDecorator>
 }
 
 /*
@@ -63,7 +55,7 @@ interface TextEditorState{
 export const EditorContext = React.createContext<TextEditorState>({
   editorState   : EditorState.createEmpty(),
   setEditorState: (state : EditorState) => {}, 
-  decorators    : {}
+  decorators    : []
 })
 
 /*
@@ -75,46 +67,44 @@ export default class TextEditor extends React.Component<
   editorRef   : React.Ref<Editor>
   constructor(props : TextEditorProps){
     super(props)
+    const decorators  = getDefaultDecorators()
     this.state  = {
-      editorState   : this.getInitialState(props),
+      editorState   : this.getDefaultValue(props, decorators),
       setEditorState: this.setEditorState,
-      decorators    : {}
+      decorators    : decorators
     }
     this.editorRef  = React.createRef()
   }
-  componentDidMount(): void {
-    if(this.props.onChange) this.props.onChange(this.state.editorState)
-  }
-  getInitialState(props : TextEditorProps) : EditorState{
+  /*
+    GET the default value for the editor
+  */
+  getDefaultValue(
+    props : TextEditorProps, decorators : Array<DraftDecorator>
+  ) : EditorState{
     const defaultValue  = props.defaultValue
-    if(!defaultValue) return EditorState.createEmpty()
-    else{
+    if(defaultValue){
       try{
         return EditorState.createWithContent(
-          convertFromRaw(defaultValue)
+          convertFromRaw(defaultValue), 
+          new CompositeDecorator(decorators)
         )
       }
-      catch(e){
-        console.error(e)
+      catch{
         return EditorState.createEmpty()
       }
     }
+    else return EditorState.createEmpty(
+      new CompositeDecorator(decorators)
+    )
   }
   // Main Handler
   /*
     Set the editor state
   */
-  setEditorState= (
-    state : EditorState, decorator? : Record<string, DraftDecorator>
-  ) => {
-    if(decorator)
-      this.setState({
-        editorState : state, decorators : decorator
-      })
-    else
-      this.setState({
-        editorState : state
-      })
+  setEditorState= (state : EditorState) => {
+    this.setState({
+      editorState : state
+    })
     if(this.props.onChange) this.props.onChange(state)
   }
   /*
