@@ -8,7 +8,7 @@
   --warning: #ff573d;
 }
 
-div.button {
+button {
   outline: none;
   background: transparent;
   border: transparent;
