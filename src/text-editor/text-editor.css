@@ -3,6 +3,19 @@
   border-radius: 10px;
 }
 
+.text-editor-style-center{
+  text-align  : center;
+}
+.text-editor-style-left{
+  text-align  : left;
+}
+.text-editor-style-right{
+  text-align  : right;
+}
+.text-editor-style-justify{
+  text-align  : justify;
+}
+
 .editor-toggle-select {
   padding: 0rem 1rem;
 }

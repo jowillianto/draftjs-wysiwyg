@@ -12,7 +12,11 @@ import {
   faCode, 
   faQuoteLeft, 
   faLink, 
-  faImage 
+  faImage,
+  faAlignCenter, 
+  faAlignJustify, 
+  faAlignLeft, 
+  faAlignRight
 } from "@fortawesome/free-solid-svg-icons"
 
 export default class EditorHeader extends React.Component{
@@ -55,6 +59,18 @@ export default class EditorHeader extends React.Component{
           <EditorToggle styleName='h4'>H4</EditorToggle>
           <EditorToggle styleName='h5'>H5</EditorToggle>
           <EditorToggle styleName='h6'>H6</EditorToggle>
+          <EditorToggle styleName = 'left'>
+            <FontAwesomeIcon icon = {faAlignLeft} />
+          </EditorToggle>
+          <EditorToggle styleName = 'center'>
+            <FontAwesomeIcon icon = {faAlignCenter} />
+          </EditorToggle>
+          <EditorToggle styleName = 'right'>
+            <FontAwesomeIcon icon = {faAlignRight} />
+          </EditorToggle>
+          <EditorToggle styleName = 'justify'>
+            <FontAwesomeIcon icon = {faAlignJustify} />
+          </EditorToggle>
           <EditorLinkToggle>
             <FontAwesomeIcon icon={faLink}/>
           </EditorLinkToggle>

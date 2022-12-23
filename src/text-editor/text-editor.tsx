@@ -9,11 +9,11 @@ import {
   DraftDecorator,
   RawDraftContentState, 
   CompositeDecorator,
-  convertFromRaw,
-  convertToRaw
+  convertFromRaw
 } from 'draft-js'
 import "./text-editor.css"
 import getDefaultDecorators from "./decorators"
+import blockRendererFn from "./align-map"
 
 /*
   Editor Behaviour for Editor
@@ -156,6 +156,7 @@ export default class TextEditor extends React.Component<
             handleKeyCommand= {this.handleKeyCommand}
             ref             = {this.editorRef}
             keyBindingFn    = {keyMapping}
+            blockRendererFn = {blockRendererFn}
             {...behaviour}
             {...otherProps}
           />
