@@ -35,7 +35,8 @@ interface TextEditorProps{
   editorBehaviour?: EditorBehaviour,
   editorShortcut? : ((e : React.KeyboardEvent) => DraftEditorCommand) | boolean
   onChange?       : (e : EditorState) => any, 
-  defaultValue?   : RawDraftContentState
+  defaultValue?   : RawDraftContentState, 
+  otherProps?     : Object
 }
 
 /*
@@ -142,6 +143,7 @@ export default class TextEditor extends React.Component<
   render() : React.ReactNode{
     const behaviour   = this.getBehaviourFromProps()
     const keyMapping  = this.getKeyMappingFromProps()
+    const otherProps  = this.props.otherProps ? this.props.otherProps : {}
     return (
       <div className = 'text-editor'>
         <EditorContext.Provider value = {this.state}>
@@ -155,6 +157,7 @@ export default class TextEditor extends React.Component<
             ref             = {this.editorRef}
             keyBindingFn    = {keyMapping}
             {...behaviour}
+            {...otherProps}
           />
         </EditorContext.Provider>
       </div>
