@@ -57,7 +57,7 @@ export default function blockStyleFn(block : ContentBlock) :
 DraftRenderer | undefined{
   const blockType   = block.getType()
   const splitBlock  = blockType.split(' ')
-  if(splitBlock.length == 2){
+  if(splitBlock.length === 2){
     const [main, align]   = splitBlock
     const element         = ALIGNABLE[main]
     if(element)

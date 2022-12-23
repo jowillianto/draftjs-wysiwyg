@@ -32,7 +32,8 @@ export interface DraftDecoratorComponentProps{
   Link 
 */
 export function Link (props : DraftDecoratorComponentProps) : React.ReactNode{
-  const {contentState, children, entityKey, ...other}   = props
+  const contentState    = props.contentState
+  const entityKey       = props.entityKey
   const {url, linkTest} = contentState.getEntity(entityKey).getData()
   return (
     <a href = {url}>
@@ -45,11 +46,12 @@ export function Link (props : DraftDecoratorComponentProps) : React.ReactNode{
   Image 
 */
 export function Image (props : DraftDecoratorComponentProps) : React.ReactNode{
-  const {contentState, children, entityKey, ...other}   = props
+  const contentState    = props.contentState
+  const entityKey       = props.entityKey
   const { url }   = contentState.getEntity(entityKey).getData()
   return (
     <React.Fragment>
-      <img src = {url} style = {{width : '50%'}} />
+      <img src = {url} style = {{width : '50%'}} alt = 'uploaded'/>
       <p style = {{visibility : 'hidden'}}>{props.children}</p>
     </React.Fragment>
   )
