@@ -38,3 +38,7 @@ button.submit-button{
   font-size: 1.1em;
   font-weight: bold;
 }
+
+button.submit-button:active{
+  background-color: var(--warning);
+}
