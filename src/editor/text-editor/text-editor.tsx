@@ -25,7 +25,7 @@ import {
 */
 export const EditorContext = React.createContext<TextEditorState>({
   editorState   : EditorState.createEmpty(),
-  setEditorState: (state : EditorState) => {}, 
+  setEditorState: (state : EditorState) => null, 
   decorators    : []
 })
 
