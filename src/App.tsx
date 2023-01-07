@@ -1,12 +1,12 @@
 import React from 'react'
-import TextEditor from './text-editor/text-editor'
+import TextEditor from './editor/text-editor/text-editor'
 import './index.css'
 import {
   convertToRaw,
   EditorState, 
   RawDraftContentState
 } from 'draft-js'
-import EditorHeader from './text-editor/editor-header'
+import EditorHeader from './editor/editor-header/editor-header'
 
 export default class App extends React.Component<
   Object, {editor : EditorState | null}
