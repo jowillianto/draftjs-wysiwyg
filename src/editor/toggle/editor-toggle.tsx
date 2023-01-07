@@ -54,7 +54,7 @@ export default class EditorToggle extends React.Component<InlineToggleProps>{
       const splitBlock= getCurrentAlignment(editorState)
       const style     = DRAFT_BLOCK_ALIGNMENT_TYPE[styleName]
       const alignable = splitBlock[0] in ALIGNABLE
-      if(splitBlock[1] != ''){
+      if(splitBlock[1] !== ''){
         const [main, align] = splitBlock
         this.setStateWithAlign(editorState, main, style)
       }
