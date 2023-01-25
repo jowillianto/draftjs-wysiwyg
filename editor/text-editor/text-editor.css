@@ -1,0 +1,137 @@
+.text-editor {
+  border: 1px solid var(--dark);
+  border-radius: 10px;
+}
+
+.text-editor-style-center{
+  text-align  : center;
+}
+.text-editor-style-left{
+  text-align  : left;
+}
+.text-editor-style-right{
+  text-align  : right;
+}
+.text-editor-style-justify{
+  text-align  : justify;
+}
+
+.editor-toggle-select {
+  padding: 0rem 1rem;
+}
+
+.editor-toggles>div {
+  padding: 0.5rem 1rem;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.editor-toggles button {
+  border-radius: 10px;
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.editor-toggles button:hover {
+  background: var(--gray);
+}
+
+/* Active */
+.inline-toggle.text-editor-toggle.active button {
+  background: var(--gray);
+}
+
+/* upload */
+.upload-bg {
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 999;
+  pointer-events: all;
+}
+
+.upload-msgbox {
+  background: white;
+  border-radius: 20px;
+  width: 350px;
+  height: 300px;
+  margin: auto;
+  padding: 2rem;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-evenly;
+  pointer-events: all;
+}
+
+.upload-btns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.upload-btns button {
+  border-radius: 5rem;
+  width: calc(100% / 2 - 10px);
+  height: 40px;
+  margin: 0px auto;
+}
+
+.upload-btns button:first-of-type {
+  border: 1px solid var(--dark);
+}
+
+.upload-btns button:last-of-type {
+  background: var(--main);
+}
+
+.upload-btns button:first-of-type:hover {
+  background: var(--dark);
+  color: white;
+}
+
+.upload-btns button:last-of-type:hover {
+  background: var(--main);
+  color: white;
+}
+
+/* Link */
+.link-toggle-text,
+.link-toggle-href {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.link-toggle-text>p,
+.link-toggle-href>p {
+  width: 50px;
+  margin-right: 10px;
+}
+
+.link-toggle-text>input,
+.link-toggle-href>input {
+  width: 200px;
+  height: 10px;
+}
+
+/* Textarea */
+.DraftEditor-editorContainer {
+  border-top: 1px solid var(--dark);
+  min-height: 500px;
+  padding: 1rem;
+  font-size: 18px;
+}
