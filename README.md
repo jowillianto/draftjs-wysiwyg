@@ -1,6 +1,9 @@
 # Text Editor WYSIWYG
 A WYSIWYG Suite of Editor implemented for use in an application
 ## Installation
+```
+npm install git+https://github.com/jowillianto/draftjs-wysiwyg#stable
+```
 ## Example Usage
 ```tsx
 import React from 'react'
