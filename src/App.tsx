@@ -44,7 +44,6 @@ export default class App extends React.Component<
         <TextEditor 
           header          = {<EditorHeader />}
           editorShortcut  = {true}
-          key             = {1}
           onChange        = {this.updateEditor}
           defaultValue    = {this.defaultValue}
         />
