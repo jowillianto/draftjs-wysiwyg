@@ -1,0 +1,13 @@
+MANIFEST.in
+pyproject.toml
+setup.py
+django_draftjs/__init__.py
+django_draftjs/apps.py
+django_draftjs.egg-info/PKG-INFO
+django_draftjs.egg-info/SOURCES.txt
+django_draftjs.egg-info/dependency_links.txt
+django_draftjs.egg-info/requires.txt
+django_draftjs.egg-info/top_level.txt
+django_draftjs/static/django_draftjs/draftjs.css
+django_draftjs/static/django_draftjs/draftjs.js
+django_draftjs/templates/django_draftjs/draftjs.html

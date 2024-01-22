@@ -61,7 +61,9 @@ export default class TextEditor extends React.Component<
         )
       }
       catch{
-        return EditorState.createEmpty()
+        return EditorState.createEmpty(
+          new CompositeDecorator(decorators)
+        )
       }
     }
     else return EditorState.createEmpty(

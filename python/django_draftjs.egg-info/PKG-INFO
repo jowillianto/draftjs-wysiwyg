@@ -1,0 +1,7 @@
+Metadata-Version: 2.1
+Name: django-draftjs
+Version: 0.0.1
+Summary: DraftJS Integration for Django Admin
+Home-page: https://github.com/jowillianto/draftjs-wysiwyg
+Author: Jonathan Willianto & Park JinHee
+Requires-Dist: django>=4.0
