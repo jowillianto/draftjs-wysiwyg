@@ -7,13 +7,12 @@ import {
 } from 'draft-js'
 import EditorHeader from './editor/editor-header/editor-header'
 
-const initFieldName = process.env.REACT_APP_INIT_DATA as string
 const saveFieldName = process.env.REACT_APP_HIDDEN_FIELD as string
 
 const App = () => {
   const defaultValue = React.useMemo(() => {
     const value = (
-      document.getElementById(initFieldName) as (HTMLInputElement | null)
+      document.getElementById(saveFieldName) as (HTMLInputElement | null)
     )?.value
     if (value)
       return JSON.parse(value)
