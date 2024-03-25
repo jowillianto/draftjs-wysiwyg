@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-draftjs"
-version = "0.1.0"
+version = "0.0.2"
 description = ""
 authors = ["Jonathan Willianto <jowillianto@gmail.com>"]
 license = "MIT License"
