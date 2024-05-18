@@ -19,8 +19,16 @@ import {
   faAlignRight
 } from "@fortawesome/free-solid-svg-icons"
 
-export default class EditorHeader extends React.Component{
-  convertToLink(img : Blob) : Promise<string | ArrayBuffer | null>{
+/**
+ * @params onImageDrop : function to call that returns an src for the image. This can be used to 
+ * override the default way of handling images
+ */
+type EditorHeaderP = {
+  onImageDrop? : (img : Blob) => Promise<string>
+}
+export default class EditorHeader extends React.Component<EditorHeaderP>{
+  // Default image saving function
+  saveImageToEditorState(img : Blob) : Promise<string | ArrayBuffer | null> {
     const reader  = new FileReader()
     return new Promise((res, rej) => {
       reader.readAsDataURL(img)
@@ -28,6 +36,13 @@ export default class EditorHeader extends React.Component{
         res(reader.result)
       })
     })
+  }
+  convertToLink(img : Blob) : Promise<string | ArrayBuffer | null>{
+    // Don't use the default function
+    if (this.props.onImageDrop)
+      return this.props.onImageDrop(img)
+    else
+      return this.saveImageToEditorState(img)
   }
   render(): React.ReactNode {
     return(

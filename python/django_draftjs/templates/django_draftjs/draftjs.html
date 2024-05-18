@@ -1,10 +1,12 @@
 {% load static %}
 {% block content %}
-<div id = 'draft-form'></div>
-<input type = 'hidden' name = '{{widget.name}}' value = '{{widget.value}}' id = 'draft-form-hidden'>
+<div>
+  <div></div>
+  <script src="{% static 'django_draftjs/draftjs.js' %}"></script>
+  <input type = 'hidden' name = '{{widget.name}}' value = '{{widget.value}}' id = 'draft-form-hidden'>
+</div>
 {% endblock %}
 
 {% block extrahead %}
-<script src="{% static 'django_draftjs/draftjs.js' %}"></script>
 <link rel="stylesheet" href="{% static 'django_draftjs/draftjs.css' %}">
 {% endblock %}

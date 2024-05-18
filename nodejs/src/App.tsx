@@ -1,41 +1,39 @@
-import React from 'react'
-import TextEditor from './editor/text-editor/text-editor'
-import './index.css'
-import {
-  convertToRaw,
-  EditorState
-} from 'draft-js'
-import EditorHeader from './editor/editor-header/editor-header'
+import React from "react";
+import TextEditor from "./editor/text-editor/text-editor";
+import "./index.css";
+import { convertToRaw, EditorState } from "draft-js";
+import EditorHeader from "./editor/editor-header/editor-header";
 
-const saveFieldName = process.env.REACT_APP_HIDDEN_FIELD as string
+type AppP = {
+  inputElement?: HTMLInputElement;
+};
 
-const App = () => {
+const App = ({ inputElement }: AppP) => {
   const defaultValue = React.useMemo(() => {
-    const value = (
-      document.getElementById(saveFieldName) as (HTMLInputElement | null)
-    )?.value
-    if (value)
-      return JSON.parse(value)
-    else
-      return undefined
-  }, [])
-  const saveToHiddenField = React.useCallback((editor : EditorState) => {
-    const elm = document.getElementById(saveFieldName) as 
-      (HTMLInputElement | null)
-    if (elm){
-      elm.value = JSON.stringify(convertToRaw(editor.getCurrentContent()))
-    }
-  }, [])
+    if (!inputElement) return undefined;
+    const value = inputElement.value;
+    if (value) return JSON.parse(value);
+    else return undefined;
+  }, [inputElement]);
+  const saveToHiddenField = React.useCallback(
+    (editor: EditorState) => {
+      if (inputElement)
+        inputElement.value = JSON.stringify(
+          convertToRaw(editor.getCurrentContent())
+        );
+    },
+    [inputElement]
+  );
   return (
     <React.Fragment>
-      <TextEditor 
-        header = {<EditorHeader />}
-        onChange = {saveToHiddenField}
-        defaultValue = {defaultValue}
+      <TextEditor
+        header={<EditorHeader />}
+        onChange={saveToHiddenField}
+        defaultValue={defaultValue}
         editorShortcut
       />
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default App
+export default App;
