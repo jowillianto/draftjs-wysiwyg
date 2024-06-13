@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name = 'django-draftjs',
-    version = '0.0.3',
+    version = '0.0.4',
     description = 'DraftJS Integration for Django Admin',
     url = 'https://github.com/jowillianto/draftjs-wysiwyg',
     author = 'Jonathan Willianto & Park JinHee',

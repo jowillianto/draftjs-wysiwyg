@@ -89,7 +89,7 @@ export default class EditorHeader extends React.Component<EditorHeaderP>{
           <EditorLinkToggle>
             <FontAwesomeIcon icon={faLink}/>
           </EditorLinkToggle>
-          <EditorImageToggle convertToLink = {this.convertToLink}>
+          <EditorImageToggle convertToLink = {this.convertToLink.bind(this)}>
             <FontAwesomeIcon icon={faImage}/>
           </EditorImageToggle>
         </div>
